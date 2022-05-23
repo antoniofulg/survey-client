@@ -19,12 +19,12 @@ const Input: React.FC<Props> = (props: Props) => {
       [event.target.name]: event.target.value,
     })
   }
-  const getStatus = (): string => {
-    return '🔴'
-  }
 
+  const getStatus = (): string => {
+    return error ? '🔴' : '🟢'
+  }
   const getTitle = (): string => {
-    return error
+    return error || 'Tudo certo!'
   }
 
   return (
