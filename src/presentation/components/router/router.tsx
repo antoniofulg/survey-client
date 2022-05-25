@@ -1,20 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Login } from '@/presentation/pages'
-import { ValidationStub } from '@/presentation/test'
-import { Authentication, AuthenticationParams } from '@/domain/usecases'
-import { AccountModel } from '@/domain/models'
-import { mockAccountModel } from '@/domain/test'
-
-class AuthenticationSpy implements Authentication {
-  account = mockAccountModel()
-  params: AuthenticationParams
-
-  auth(params: AuthenticationParams): Promise<AccountModel> {
-    this.params = params
-    return Promise.resolve(this.account)
-  }
-}
+import { AuthenticationSpy, ValidationStub } from '@/presentation/test'
 
 const validationSpy = new ValidationStub()
 const authenticationSpy = new AuthenticationSpy()
