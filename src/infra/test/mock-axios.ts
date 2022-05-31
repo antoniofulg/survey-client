@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import axios, { AxiosResponse } from 'axios'
 
 export const mockHttpResponse = (): Partial<AxiosResponse<any>> => ({

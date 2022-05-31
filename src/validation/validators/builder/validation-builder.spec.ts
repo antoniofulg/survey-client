@@ -3,7 +3,7 @@ import {
   MinLengthValidation,
   RequiredFieldValidation,
 } from '@/validation/validators'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { ValidationBuilder as sut } from './validation-builder'
 
 describe('ValidationBuilder', () => {
