@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Styles from './signup-styles.scss'
 import {
   Footer,
@@ -7,13 +7,21 @@ import {
   FormStatus,
 } from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-context'
-import { Link } from 'react-router-dom'
 
 const SignUp: React.FC = () => {
+  const [state] = useState({
+    isLoading: false,
+    nameError: 'Campo obrigatório',
+    emailError: 'Campo obrigatório',
+    passwordError: 'Campo obrigatório',
+    passwordConfirmationError: 'Campo obrigatório',
+    mainError: '',
+  })
+
   return (
     <div className={Styles.signup}>
       <LoginHeader />
-      <Context.Provider value={{ state: {} }}>
+      <Context.Provider value={{ state }}>
         <form className={Styles.form}>
           <h2>Criar Conta</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
@@ -28,12 +36,17 @@ const SignUp: React.FC = () => {
             name="passwordConfirmation"
             placeholder="Confirme sua senha"
           />
-          <button data-testid="submit" className={Styles.submit} type="submit">
+          <button
+            data-testid="submit"
+            disabled
+            className={Styles.submit}
+            type="submit"
+          >
             Entrar
           </button>
-          <Link data-testid="signup" to="/login" className={Styles.link}>
+          <span data-testid="login" className={Styles.link}>
             Voltar para login
-          </Link>
+          </span>
           <FormStatus />
         </form>
       </Context.Provider>
