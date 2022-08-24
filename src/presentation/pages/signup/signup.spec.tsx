@@ -1,16 +1,10 @@
 import React from 'react'
 
 import 'jest-localstorage-mock'
-import {
-  cleanup,
-  fireEvent,
-  render,
-  RenderResult,
-} from '@testing-library/react'
+import { cleanup, render, RenderResult } from '@testing-library/react'
 import { SignUp } from '@/presentation/pages'
 import { Helper, ValidationStub } from '@/presentation/test'
 import { faker } from '@faker-js/faker'
-import { act } from 'react-dom/test-utils'
 
 type SutTypes = {
   sut: RenderResult
@@ -27,17 +21,6 @@ const makeSut = (params?: SutParams): SutTypes => {
   return {
     sut,
   }
-}
-
-const populateField = async (
-  sut: RenderResult,
-  fieldName: string,
-  value = faker.random.word()
-): Promise<void> => {
-  const input = sut.getByTestId(fieldName)
-  await act(async () => {
-    fireEvent.input(input, { target: { value } })
-  })
 }
 
 describe('Login Component', () => {
@@ -57,7 +40,7 @@ describe('Login Component', () => {
   test('Should show name error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    populateField(sut, 'name')
+    Helper.populateField(sut, 'name')
     Helper.testStatusForField(sut, 'name', validationError)
   })
 })
