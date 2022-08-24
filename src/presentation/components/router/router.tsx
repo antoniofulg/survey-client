@@ -1,5 +1,5 @@
 import { SignUp } from '@/presentation/pages/'
-import { ValidationStub } from '@/presentation/test'
+import { AddAccountSpy, ValidationStub } from '@/presentation/test'
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -8,6 +8,7 @@ type Props = {
 }
 
 const validationStub = new ValidationStub()
+const addAccountSpy = new AddAccountSpy()
 
 const Router: React.FC<Props> = ({ MakeLogin }: Props) => {
   return (
@@ -16,7 +17,9 @@ const Router: React.FC<Props> = ({ MakeLogin }: Props) => {
         <Route path="/login" element={<MakeLogin />} />
         <Route
           path="/signup"
-          element={<SignUp validation={validationStub} />}
+          element={
+            <SignUp validation={validationStub} addAccount={addAccountSpy} />
+          }
         />
       </Routes>
     </BrowserRouter>
