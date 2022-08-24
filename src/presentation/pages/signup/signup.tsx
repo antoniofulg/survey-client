@@ -40,6 +40,12 @@ const SignUp: React.FC<Props> = ({ validation }: Props) => {
     })
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
+  const hasError =
+    !!state.nameError ||
+    !!state.emailError ||
+    !!state.passwordError ||
+    !!state.passwordConfirmationError
+
   return (
     <div className={Styles.signup}>
       <LoginHeader />
@@ -60,7 +66,7 @@ const SignUp: React.FC<Props> = ({ validation }: Props) => {
           />
           <button
             data-testid="submit"
-            disabled
+            disabled={hasError}
             className={Styles.submit}
             type="submit"
           >
