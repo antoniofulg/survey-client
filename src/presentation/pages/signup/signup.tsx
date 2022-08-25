@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 import {
@@ -111,9 +111,9 @@ const SignUp: React.FC<Props> = ({
           >
             Entrar
           </button>
-          <span data-testid="login" className={Styles.link}>
+          <Link data-testid="login-link" to="/login" className={Styles.link}>
             Voltar para login
-          </span>
+          </Link>
           <FormStatus />
         </form>
       </Context.Provider>
