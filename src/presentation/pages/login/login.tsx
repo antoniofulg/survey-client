@@ -7,6 +7,7 @@ import {
   Input,
   LoginHeader,
   FormStatus,
+  SubmitButton,
 } from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols'
@@ -42,14 +43,14 @@ const Login: React.FC<Props> = ({
     })
   }, [state.email, state.password])
 
-  const hasError = !!state.emailError || !!state.passwordError
+  const isFormInvalid = !!state.emailError || !!state.passwordError
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault()
     try {
-      if (state.isLoading || hasError) return
+      if (state.isLoading || isFormInvalid) return
       setState({ ...state, isLoading: true })
       const account = await authentication.auth({
         email: state.email,
@@ -82,14 +83,7 @@ const Login: React.FC<Props> = ({
             name="password"
             placeholder="Digite sua senha"
           />
-          <button
-            data-testid="submit"
-            disabled={hasError}
-            className={Styles.submit}
-            type="submit"
-          >
-            Entrar
-          </button>
+          <SubmitButton disabled={isFormInvalid}>Entrar</SubmitButton>
           <Link data-testid="signup-link" to="/signup" className={Styles.link}>
             Criar conta
           </Link>

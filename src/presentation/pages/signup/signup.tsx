@@ -7,6 +7,7 @@ import {
   Input,
   LoginHeader,
   FormStatus,
+  SubmitButton,
 } from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols'
@@ -51,7 +52,7 @@ const SignUp: React.FC<Props> = ({
     })
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
-  const hasError =
+  const isFormInvalid =
     !!state.nameError ||
     !!state.emailError ||
     !!state.passwordError ||
@@ -62,7 +63,7 @@ const SignUp: React.FC<Props> = ({
   ): Promise<void> => {
     event.preventDefault()
     try {
-      if (state.isLoading || hasError) return
+      if (state.isLoading || isFormInvalid) return
       setState((prevState) => ({ ...prevState, isLoading: true }))
       const account = await addAccount.add({
         name: state.name,
@@ -103,14 +104,7 @@ const SignUp: React.FC<Props> = ({
             name="passwordConfirmation"
             placeholder="Confirme sua senha"
           />
-          <button
-            data-testid="submit"
-            disabled={hasError}
-            className={Styles.submit}
-            type="submit"
-          >
-            Entrar
-          </button>
+          <SubmitButton disabled={isFormInvalid}>Cadastrar</SubmitButton>
           <Link data-testid="login-link" to="/login" className={Styles.link}>
             Voltar para login
           </Link>
