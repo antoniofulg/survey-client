@@ -1,8 +1,4 @@
-import React from 'react'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
 import { faker } from '@faker-js/faker'
-import 'jest-localstorage-mock'
 import {
   render,
   RenderResult,
@@ -10,6 +6,12 @@ import {
   cleanup,
   waitFor,
 } from '@testing-library/react'
+import { createMemoryHistory } from 'history'
+import 'jest-localstorage-mock'
+import React from 'react'
+import { Router } from 'react-router-dom'
+
+import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from '@/presentation/pages'
 import {
   AuthenticationSpy,
@@ -17,7 +19,6 @@ import {
   SaveAccessTokenMock,
   Helper,
 } from '@/presentation/test'
-import { InvalidCredentialsError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RenderResult
@@ -62,15 +63,6 @@ const simulateValidSubmit = async (
   const form = sut.getByTestId('form')
   fireEvent.submit(form)
   await waitFor(() => form)
-}
-
-const testElementText = (
-  sut: RenderResult,
-  fieldName: string,
-  text: string
-): void => {
-  const el = sut.getByTestId(fieldName)
-  expect(el.textContent).toBe(text)
 }
 
 describe('Login Component', () => {
@@ -181,7 +173,7 @@ describe('Login Component', () => {
 
   test('Should go to signup page', () => {
     const { sut } = makeSut()
-    const register = sut.getByTestId('signup')
+    const register = sut.getByTestId('signup-link')
     fireEvent.click(register)
     expect(history.location.pathname).toBe('/signup')
   })

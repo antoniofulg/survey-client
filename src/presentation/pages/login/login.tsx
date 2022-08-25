@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Styles from './login-styles.scss'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { Authentication, SaveAccessToken } from '@/domain/usecases'
 import {
   Footer,
   Input,
@@ -8,8 +10,8 @@ import {
 } from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols'
-import { Authentication, SaveAccessToken } from '@/domain/usecases'
-import { Link, useNavigate } from 'react-router-dom'
+
+import Styles from './login-styles.scss'
 
 type Props = {
   validation: Validation
@@ -40,12 +42,14 @@ const Login: React.FC<Props> = ({
     })
   }, [state.email, state.password])
 
+  const hasError = !!state.emailError || !!state.passwordError
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault()
     try {
-      if (state.isLoading || state.emailError || state.passwordError) return
+      if (state.isLoading || hasError) return
       setState({ ...state, isLoading: true })
       const account = await authentication.auth({
         email: state.email,
@@ -80,13 +84,13 @@ const Login: React.FC<Props> = ({
           />
           <button
             data-testid="submit"
-            disabled={!!state.emailError || !!state.passwordError}
+            disabled={hasError}
             className={Styles.submit}
             type="submit"
           >
             Entrar
           </button>
-          <Link data-testid="signup" to="/signup" className={Styles.link}>
+          <Link data-testid="signup-link" to="/signup" className={Styles.link}>
             Criar conta
           </Link>
           <FormStatus />
