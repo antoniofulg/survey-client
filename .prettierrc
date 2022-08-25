@@ -1,5 +1,7 @@
 {
   "trailingComma": "es5",
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "importOrder": ["^@/(.*)", "^components/(.*)$", "^[./]"],
+  "importOrderSeparation": true
 }
