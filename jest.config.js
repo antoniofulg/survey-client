@@ -12,6 +12,10 @@ module.exports = {
   transform: {
     '.+\\.(ts|tsx)$': 'ts-jest',
   },
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDit>/src/main/test/cypress',
+  ],
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1',
     '\\.scss$': 'identity-obj-proxy',
