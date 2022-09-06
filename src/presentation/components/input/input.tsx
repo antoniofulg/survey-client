@@ -1,6 +1,8 @@
-import React, { useContext } from 'react'
-import Styles from './input-styles.scss'
+import React, { useContext, useId } from 'react'
+
 import Context from '@/presentation/contexts/form/form-context'
+
+import Styles from './input-styles.scss'
 
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -8,6 +10,7 @@ type Props = React.DetailedHTMLProps<
 >
 
 const Input: React.FC<Props> = (props: Props) => {
+  const id = props.id ? `${useId()}-${props.id}` : useId()
   const { state, setState } = useContext(Context)
   const error = state[`${props.name}Error`]
   const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
@@ -31,11 +34,14 @@ const Input: React.FC<Props> = (props: Props) => {
     <div className={Styles.inputWrap}>
       <input
         {...props}
+        placeholder=" "
+        id={id}
         data-testid={props.name}
         readOnly
         onFocus={enableInput}
         onChange={handleChange}
       />
+      <label htmlFor={id}>{props.placeholder}</label>
       <span
         data-testid={`${props.name}-status`}
         title={getTitle()}
